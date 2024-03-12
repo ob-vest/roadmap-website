@@ -6,8 +6,8 @@ const Login = () => {
   const [messageBody] = useState(null);
 
   useEffect(() => {
-    console.log("messageBody", messageBody);
     if (messageBody) {
+      console.log("messageBody", messageBody);
       // Replace with your API URL and request options
       axios
         .post(

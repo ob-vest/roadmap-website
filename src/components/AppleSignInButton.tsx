@@ -9,7 +9,7 @@ export const MyAppleSigninButton = ({ ...rest }) => (
     authOptions={{
       clientId: "dk.invoke.Roadmap-website",
       scope: "",
-      redirectURI: "https:/roadmap-website-production.up.railway.app/login",
+      redirectURI: "https://roadmap-website-production.up.railway.app/login",
       state: "",
       usePopup: false,
     }}

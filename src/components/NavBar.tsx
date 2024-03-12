@@ -1,11 +1,10 @@
 import {
   NavigationMenu,
   NavigationMenuItem,
-  NavigationMenuLink,
   NavigationMenuList,
   navigationMenuTriggerStyle,
 } from "@/components/ui/navigation-menu";
-
+import { Link } from "@tanstack/react-router";
 const NavBar = () => {
   return (
     <>
@@ -13,20 +12,25 @@ const NavBar = () => {
         <NavigationMenu>
           <NavigationMenuList>
             <NavigationMenuItem>
-              <NavigationMenuLink className={navigationMenuTriggerStyle()}>
+              <Link className={navigationMenuTriggerStyle()} to="/">
                 Home
-              </NavigationMenuLink>
+              </Link>
             </NavigationMenuItem>
 
             <NavigationMenuItem>
-              <NavigationMenuLink className={navigationMenuTriggerStyle()}>
-                Profile
-              </NavigationMenuLink>
+              <Link className={navigationMenuTriggerStyle()} to="/requests">
+                Requests
+              </Link>
             </NavigationMenuItem>
             <NavigationMenuItem>
-              <NavigationMenuLink className={navigationMenuTriggerStyle()}>
+              <Link className={navigationMenuTriggerStyle()} to="/login">
+                Login
+              </Link>
+            </NavigationMenuItem>
+            <NavigationMenuItem>
+              <Link className={navigationMenuTriggerStyle()} to="/requests">
                 Logout
-              </NavigationMenuLink>
+              </Link>
             </NavigationMenuItem>
           </NavigationMenuList>
         </NavigationMenu>
