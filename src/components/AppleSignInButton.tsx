@@ -1,17 +1,33 @@
 import AppleSignin from "react-apple-signin-auth";
 
+interface Authorization {
+  code: string;
+  id_token: string;
+}
+
+export interface AppleResponse {
+  authorization: Authorization;
+}
+interface MyAppleSigninButtonProps {
+  onSuccess: (data: AppleResponse) => void;
+  onError: (error: unknown) => void;
+}
+
 /** Apple Signin button */
-export const MyAppleSigninButton = ({ ...rest }) => (
+export const MyAppleSigninButton: React.FC<MyAppleSigninButtonProps> = ({
+  onSuccess,
+  ...rest
+}) => (
   <AppleSignin
     /** Auth options passed to AppleID.auth.init() */
-    onSuccess={(data: unknown) => console.log(data)}
-    onError={(error: unknown) => console.error(error)}
+    onSuccess={onSuccess}
+    // onError={(error: unknown) => console.error("error: ", error)}
     authOptions={{
       clientId: "dk.invoke.Roadmap-website",
       scope: "",
       redirectURI: "https://roadmap-website-one.vercel.app/login",
       state: "",
-      usePopup: false,
+      usePopup: true,
     }}
     /** General props */
     uiType="dark"

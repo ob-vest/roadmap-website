@@ -1,29 +1,37 @@
-import { useEffect, useState } from "react";
-import axios from "axios"; // or use fetch
-import AppleSignInButton from "./AppleSignInButton";
+// import { useEffect } from "react";
+import { AxiosResponse } from "axios";
+import apiClient from "@/services/api-client";
+import AppleSignInButton, { AppleResponse } from "./AppleSignInButton";
+
+interface SessionCredentials {
+  appleUserId: string;
+  authorizationToken: string;
+}
 
 const Login = () => {
-  const [messageBody] = useState(null);
+  const handleSuccess = (data: AppleResponse) => {
+    console.log("Success DATA:", data.authorization);
+    console.log("Code:", data.authorization.code);
 
-  useEffect(() => {
-    if (messageBody) {
-      console.log("messageBody", messageBody);
-      // Replace with your API URL and request options
-      axios
-        .post(
-          "https://roadmap-apiservice-production.up.railway.app/api/auth/login",
-          messageBody
-        )
-        .then((response) => {
-          console.log(response.data);
-        })
-        .catch((error) => {
-          console.error(error);
-        });
-    }
-  }, [messageBody]);
+    apiClient
+      .post("auth/login", {
+        code: data.authorization.code,
+      })
+      .then((response: AxiosResponse<SessionCredentials>) => {
+        localStorage.setItem(
+          "authorizationToken",
+          response.data.authorizationToken
+        );
+      })
+      .catch((error) => console.error("Error:", error));
+  };
 
-  return <AppleSignInButton />;
+  return (
+    <AppleSignInButton
+      onSuccess={handleSuccess}
+      onError={(error) => console.error("Error:", error)}
+    />
+  );
 };
 
 export default Login;
