@@ -26,14 +26,14 @@ const NavBar = () => {
                 Login
               </Link>
             </NavigationMenuItem>
-            <NavigationMenuItem>
+            {/* <NavigationMenuItem>
               <Link
                 className={navigationMenuTriggerStyle()}
                 to="/request-review"
               >
                 Logout
               </Link>
-            </NavigationMenuItem>
+            </NavigationMenuItem> */}
           </NavigationMenuList>
         </NavigationMenu>
       </div>

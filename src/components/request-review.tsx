@@ -1,17 +1,17 @@
-import { createFileRoute } from "@tanstack/react-router";
+// import { createFileRoute } from "@tanstack/react-router";
 import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Separator } from "@/components/ui/separator";
 import { Textarea } from "@/components/ui/textarea";
 import { Input } from "@/components/ui/input";
 
-export const Route = createFileRoute("/request-review")({
-  component: () => ReviewPage(),
-});
+// export const Route = createFileRoute("/request-review")({
+//   component: () => ReviewPage(),
+// });
 
 function ReviewPage() {
   return (
-    <div className="">
+    <div className="p-2 pt-5 md:p-5">
       <div className="flex justify-end gap-3">
         <Button
           className="h-10 text-red-600 hover:text-red-600"
@@ -21,7 +21,7 @@ function ReviewPage() {
         </Button>
         <Button className="h-10 bg-foreground">Approve</Button>
       </div>
-      <div className="mt-10 grid md:grid-cols-2">
+      <div className="mt-10 grid gap-10 md:grid-cols-2">
         {/* CURRENT TEXT */}
         <div className="flex flex-col gap-10 text-left">
           <div>
@@ -92,3 +92,5 @@ function ReviewPage() {
     </div>
   );
 }
+
+export default ReviewPage;
