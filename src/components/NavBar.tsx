@@ -8,7 +8,7 @@ import { Link } from "@tanstack/react-router";
 const NavBar = () => {
   return (
     <>
-      <div className="flex justify-end">
+      <div className="flex justify-end ">
         <NavigationMenu>
           <NavigationMenuList>
             <NavigationMenuItem>
@@ -16,7 +16,6 @@ const NavBar = () => {
                 Home
               </Link>
             </NavigationMenuItem>
-
             <NavigationMenuItem>
               <Link className={navigationMenuTriggerStyle()} to="/requests">
                 Requests
@@ -28,7 +27,10 @@ const NavBar = () => {
               </Link>
             </NavigationMenuItem>
             <NavigationMenuItem>
-              <Link className={navigationMenuTriggerStyle()} to="/requests">
+              <Link
+                className={navigationMenuTriggerStyle()}
+                to="/request-review"
+              >
                 Logout
               </Link>
             </NavigationMenuItem>

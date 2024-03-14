@@ -1,6 +1,8 @@
 import { createLazyFileRoute, useNavigate } from "@tanstack/react-router";
 import { useEffect } from "react";
 import DashboardBox from "@/components/DashboardBox";
+import PendingRequestsBox from "@/components/PendingRequestsBox";
+import StatisticsBox from "@/components/StatisticsBox";
 export const Route = createLazyFileRoute("/")({
   component: Index,
 });
@@ -15,11 +17,11 @@ function Index() {
     }
   }, [navigate]);
   return (
-    <div className="p-2">
-      <h3>Welcome Home!</h3>
-      <div className="grid gap-2 md:grid-cols-2 md:gap-10 ">
-        <DashboardBox />
-        <DashboardBox />
+    <div>
+      <h1 className="py-10 text-3xl font-bold">Overview</h1>
+      <div className="grid gap-5 md:grid-cols-2 md:gap-10 ">
+        <PendingRequestsBox />
+        <StatisticsBox />
       </div>
     </div>
   );

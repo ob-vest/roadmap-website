@@ -14,6 +14,7 @@ import { createFileRoute } from '@tanstack/react-router'
 
 import { Route as rootRoute } from './routes/__root'
 import { Route as RequestsImport } from './routes/requests'
+import { Route as RequestReviewImport } from './routes/request-review'
 import { Route as LoginImport } from './routes/login'
 
 // Create Virtual Routes
@@ -24,6 +25,11 @@ const IndexLazyImport = createFileRoute('/')()
 
 const RequestsRoute = RequestsImport.update({
   path: '/requests',
+  getParentRoute: () => rootRoute,
+} as any)
+
+const RequestReviewRoute = RequestReviewImport.update({
+  path: '/request-review',
   getParentRoute: () => rootRoute,
 } as any)
 
@@ -49,6 +55,10 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof LoginImport
       parentRoute: typeof rootRoute
     }
+    '/request-review': {
+      preLoaderRoute: typeof RequestReviewImport
+      parentRoute: typeof rootRoute
+    }
     '/requests': {
       preLoaderRoute: typeof RequestsImport
       parentRoute: typeof rootRoute
@@ -61,6 +71,7 @@ declare module '@tanstack/react-router' {
 export const routeTree = rootRoute.addChildren([
   IndexLazyRoute,
   LoginRoute,
+  RequestReviewRoute,
   RequestsRoute,
 ])
 
