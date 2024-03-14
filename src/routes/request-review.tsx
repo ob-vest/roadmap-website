@@ -2,6 +2,8 @@ import { createFileRoute } from "@tanstack/react-router";
 import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Separator } from "@/components/ui/separator";
+import { Textarea } from "@/components/ui/textarea";
+import { Input } from "@/components/ui/input";
 
 export const Route = createFileRoute("/request-review")({
   component: () => ReviewPage(),
@@ -53,10 +55,11 @@ function ReviewPage() {
                 <label htmlFor="ai-title">Use this</label>
               </Checkbox>
             </div>
-
-            <p className="text-muted-foreground">
-              A totally new idea. Pls add button
-            </p>
+            <Input
+              defaultValue={"A totally new idea. Pls add button"}
+              type="text"
+              className="mt-2 text-muted-foreground"
+            />
           </div>
 
           <div>
@@ -69,13 +72,20 @@ function ReviewPage() {
                 <label htmlFor="ai-description">Use this</label>
               </Checkbox>
             </div>
-            <p className="text-muted-foreground">
+            <Textarea className="mt-2 h-72 text-muted-foreground">
               Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec
               vehicula, purus nec luctus vestibulum, nisl libero fermentum
               ligula, nec consequat justo nisl vel ex. Donec vehicula, purus nec
               luctus vestibulum, nisl libero fermentum ligula, nec consequat
               justo nisl vel ex.
-            </p>
+            </Textarea>
+            {/* <p className="text-muted-foreground">
+              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec
+              vehicula, purus nec luctus vestibulum, nisl libero fermentum
+              ligula, nec consequat justo nisl vel ex. Donec vehicula, purus nec
+              luctus vestibulum, nisl libero fermentum ligula, nec consequat
+              justo nisl vel ex.
+            </p> */}
           </div>
         </div>
       </div>
