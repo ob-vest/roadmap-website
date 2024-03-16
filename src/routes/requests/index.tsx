@@ -8,7 +8,7 @@ import {
   SelectItem,
 } from "@/components/ui/select";
 
-export const Route = createFileRoute("/requests")({
+export const Route = createFileRoute("/requests/")({
   component: () => RequestPage(),
 });
 

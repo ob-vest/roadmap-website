@@ -1,9 +1,11 @@
 import { Badge } from "@/components/ui/badge";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Link } from "@tanstack/react-router";
+
 const RequestCard = () => (
   <Link
-    to="/"
+    to="/requests/$requestId"
+    params={{ requestId: "1" }}
     className="w-full rounded-md border border-border text-left hover:border-primary"
   >
     <div className="px-4 pt-4">
