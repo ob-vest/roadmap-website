@@ -7,6 +7,7 @@ import {
   SelectValue,
   SelectItem,
 } from "@/components/ui/select";
+import { Input } from "@/components/ui/input";
 
 export const Route = createFileRoute("/requests/")({
   component: () => RequestPage(),
@@ -16,8 +17,8 @@ function RequestPage() {
   return (
     <div className="flex flex-col items-center justify-center">
       <h2 className="mb-10">Requests</h2>
-
-      <div className=" mb-10 flex w-full items-center justify-end gap-3">
+      <Input placeholder="Search for requests" className="max-w-72" />
+      <div className=" my-10 flex w-full items-center justify-end gap-3">
         <p className="text-muted-foreground">Sorted by</p>
         <Select defaultValue="CreatedAt">
           <SelectTrigger className="w-36">

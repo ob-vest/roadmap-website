@@ -13,10 +13,12 @@ function RequestPage() {
   return (
     <div className="flex flex-col gap-5">
       <div className="flex flex-col rounded-md border border-border p-4 text-left">
-        <h2 className="mb-10">Request {requestId}</h2>
-        <h4>Title</h4>
-        <p>A totally new idea. Pls add button</p>
-        <h4 className="mb-2">Description</h4>
+        <h2 className="mb-10">Request #{requestId}</h2>
+        <h3>Title</h3>
+        <p className="text-muted-foreground">
+          A totally new idea. Pls add button
+        </p>
+        <h3 className="mb-2">Description</h3>
         <p className="text-muted-foreground">
           Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec
           vehicula, purus nec luctus vestibulum, nisl libero fermentum ligula,

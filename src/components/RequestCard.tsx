@@ -1,6 +1,7 @@
 import { Badge } from "@/components/ui/badge";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Link } from "@tanstack/react-router";
+import { ArrowUp, MessageSquare } from "lucide-react";
 
 const RequestCard = () => (
   <Link
@@ -22,6 +23,16 @@ const RequestCard = () => (
       justo nisl vel ex. Donec vehicula, purus nec luctus vestibulum, nisl
       libero fermentum ligula, nec consequat justo nisl vel ex.
     </ScrollArea>
+    <div className="flex justify-start gap-4 px-2 pb-1">
+      <div className="flex items-center gap-1">
+        <ArrowUp className="h-5 text-sm text-muted-foreground" />
+        <p>26</p>
+      </div>
+      <div className="flex items-center gap-1">
+        <MessageSquare className="h-5 text-sm text-muted-foreground" />
+        <p>3</p>
+      </div>
+    </div>
   </Link>
 );
 
