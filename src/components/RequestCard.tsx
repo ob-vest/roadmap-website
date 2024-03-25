@@ -2,7 +2,8 @@ import { Badge } from "@/components/ui/badge";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Link } from "@tanstack/react-router";
 import { ArrowUp, MessageSquare } from "lucide-react";
-import { IRequest, createdAtDistance } from "@/hooks/useRequests";
+import { IRequest } from "@/hooks/useRequests";
+import { distanceFromDate } from "@/utils/dateUtils";
 
 const RequestCard = (props: { request: IRequest }) => (
   <Link
@@ -15,7 +16,7 @@ const RequestCard = (props: { request: IRequest }) => (
       <div className="flex justify-between">
         <Badge className="mb-4">Feature</Badge>
         <p className="text-sm text-muted-foreground">
-          {createdAtDistance(props.request.createdAt)}
+          {distanceFromDate(props.request.createdAt)}
         </p>
       </div>
     </div>

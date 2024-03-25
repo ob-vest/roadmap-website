@@ -1,5 +1,4 @@
 import useData from "./useData";
-import { formatDistance } from "date-fns";
 
 export interface IRequest {
   id: number;
@@ -9,12 +8,6 @@ export interface IRequest {
   commentCount: number;
   createdAt: Date;
   lastActivityAt: Date;
-}
-
-export function createdAtDistance(createdAt: Date) {
-  return formatDistance(createdAt, new Date(), {
-    addSuffix: true,
-  });
 }
 
 const useRequests = () => {
