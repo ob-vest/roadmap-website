@@ -4,12 +4,13 @@ import { Checkbox } from "@/components/ui/checkbox";
 import { Separator } from "@/components/ui/separator";
 import { Textarea } from "@/components/ui/textarea";
 import { Input } from "@/components/ui/input";
+import { IRequest } from "@/hooks/useRequests";
 
 // export const Route = createFileRoute("/request-review")({
 //   component: () => ReviewPage(),
 // });
 
-function ReviewPage() {
+function ReviewPage(props: { request: IRequest }) {
   return (
     <div className="p-2 pt-5 md:p-5">
       <div className="flex justify-end gap-3">
@@ -26,19 +27,11 @@ function ReviewPage() {
         <div className="flex flex-col gap-10 text-left">
           <div>
             <h3>Title:</h3>
-            <p className="text-muted-foreground">
-              A totally new idea. Pls add button
-            </p>
+            <p className="text-muted-foreground">{props.request.title}</p>
           </div>
           <div>
             <h3 className="mb-2">Description:</h3>
-            <p className="text-muted-foreground">
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec
-              vehicula, purus nec luctus vestibulum, nisl libero fermentum
-              ligula, nec consequat justo nisl vel ex. Donec vehicula, purus nec
-              luctus vestibulum, nisl libero fermentum ligula, nec consequat
-              justo nisl vel ex.
-            </p>
+            <p className="text-muted-foreground">{props.request.description}</p>
           </div>
         </div>
         {/* AI SUGGESTED TEXT*/}

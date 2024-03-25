@@ -16,9 +16,10 @@ export const Route = createFileRoute("/requests/")({
 });
 
 function RequestPage() {
+  const defaultSortType = "CreatedAt";
   const { data: requests, error, isLoading } = useRequests();
   const [sortedRequests, setSortedRequests] = useState<IRequest[]>([]);
-  const [sortType, setSortType] = useState("CreatedAt");
+  const [sortType, setSortType] = useState(defaultSortType);
 
   useEffect(() => {
     if (requests) {
@@ -53,7 +54,7 @@ function RequestPage() {
       <Input placeholder="Search for requests" className="max-w-72" />
       <div className=" my-10 flex w-full items-center justify-end gap-3">
         <p className="text-muted-foreground">Sorted by</p>
-        <Select defaultValue="CreatedAt" onValueChange={handleSortChange}>
+        <Select defaultValue={defaultSortType} onValueChange={handleSortChange}>
           <SelectTrigger className="w-36">
             <SelectValue />
           </SelectTrigger>
