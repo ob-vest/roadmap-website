@@ -8,12 +8,14 @@ import {
   SelectItem,
 } from "@/components/ui/select";
 import { Input } from "@/components/ui/input";
+import useRequests from "@/hooks/useRequests";
 
 export const Route = createFileRoute("/requests/")({
   component: () => RequestPage(),
 });
 
 function RequestPage() {
+  const { data: requests, error, isLoading } = useRequests();
   return (
     <div className="flex flex-col items-center justify-center">
       <h2 className="mb-10">Requests</h2>
@@ -31,12 +33,13 @@ function RequestPage() {
           </SelectContent>
         </Select>
       </div>
+
       <div className=" grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3">
-        <RequestCard />
-        <RequestCard />
-        <RequestCard />
-        <RequestCard />
-        <RequestCard />
+        {error && <p>{error}</p>}
+        {isLoading && <p>Loading...</p>}
+        {requests.map((request) => (
+          <RequestCard key={request.id} request={request} />
+        ))}
       </div>
     </div>
   );
