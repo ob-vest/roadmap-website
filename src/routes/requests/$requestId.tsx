@@ -8,7 +8,7 @@ export const Route = createFileRoute("/requests/$requestId")({
 });
 function RequestPage() {
   const { requestId } = Route.useParams();
-  const { data: comments, error, isLoading } = useComments(requestId);
+  const { data: comments } = useComments(requestId);
   return (
     <div className="flex flex-col gap-5">
       <div className="flex flex-col rounded-md border border-border p-4 text-left">
