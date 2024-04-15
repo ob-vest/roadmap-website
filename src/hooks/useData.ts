@@ -3,11 +3,19 @@ import { useQuery } from "@tanstack/react-query";
 import apiClient from "../services/apiClient";
 import { AxiosRequestConfig } from "axios";
 
-const useData = <T>(
-  endpoint: string,
-  requestConfig?: AxiosRequestConfig,
-  defaultData: T[] = [],
-) => {
+// Interface used to explicitly define the type of data useData will need.
+interface UseDataParams<T> {
+  key: string;
+  endpoint: string;
+  requestConfig?: AxiosRequestConfig;
+  defaultData?: T[];
+}
+const useData = <T>({
+  key,
+  endpoint,
+  requestConfig,
+  defaultData = [],
+}: UseDataParams<T>) => {
   const fetchData = async () => {
     const res = await apiClient.get<T[]>(endpoint, requestConfig);
     return res.data;
@@ -19,7 +27,7 @@ const useData = <T>(
     isError,
     error,
   } = useQuery<T[], Error>({
-    queryKey: [endpoint],
+    queryKey: [key],
     queryFn: fetchData,
   });
 

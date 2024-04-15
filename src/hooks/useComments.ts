@@ -9,7 +9,10 @@ export interface IComment {
 }
 
 const useComments = (requestId: string) => {
-  return useData<IComment>("requests/" + requestId + "/comments");
+  return useData<IComment>({
+    key: "comments" + requestId, // Unique key for each requests comment section
+    endpoint: "requests/" + requestId + "/comments",
+  });
 };
 
 export default useComments;

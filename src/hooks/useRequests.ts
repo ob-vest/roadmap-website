@@ -11,7 +11,7 @@ export interface IRequest {
 }
 
 const useRequests = () => {
-  return useData<IRequest>("requests");
+  return useData<IRequest>({ key: "requests", endpoint: "requests" });
 };
 
 export default useRequests;
