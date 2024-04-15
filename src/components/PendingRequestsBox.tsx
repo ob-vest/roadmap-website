@@ -1,5 +1,5 @@
 import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
-import ReviewPage from "@/components/request-review";
+import ReviewPage from "@/components/RequestReview";
 import usePendingRequests from "@/hooks/usePendingRequests";
 import { distanceFromDate } from "@/utils/dateUtils";
 import { ScrollArea } from "./ui/scroll-area";

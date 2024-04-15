@@ -1,6 +1,6 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { useQuery } from "@tanstack/react-query";
-import apiClient from "../services/api-client";
+import apiClient from "../services/apiClient";
 import { AxiosRequestConfig } from "axios";
 
 const useData = <T>(

@@ -1,4 +1,5 @@
 import axios from "axios";
+// Due to CORS policy, development environment uses localhost:3000
 const apiHost =
   process.env.NODE_ENV === "development"
     ? "http://localhost:3000/api"

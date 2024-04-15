@@ -1,6 +1,6 @@
 // import { useEffect } from "react";
 import { AxiosResponse } from "axios";
-import apiClient from "@/services/api-client";
+import apiClient from "@/services/apiClient";
 import AppleSignInButton, { AppleResponse } from "./AppleSignInButton";
 
 interface SessionCredentials {
@@ -20,7 +20,7 @@ const Login = () => {
       .then((response: AxiosResponse<SessionCredentials>) => {
         localStorage.setItem(
           "authorizationToken",
-          response.data.authorizationToken
+          response.data.authorizationToken,
         );
       })
       .catch((error) => console.error("Error:", error));
