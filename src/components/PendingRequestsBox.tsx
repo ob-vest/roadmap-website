@@ -5,7 +5,7 @@ import { distanceFromDate } from "@/utils/dateUtils";
 import { ScrollArea } from "./ui/scroll-area";
 
 const PendingRequestsBox = () => {
-  const { data: pendingRequests } = usePendingRequests();
+  const { data: pendingRequests, error } = usePendingRequests();
 
   //   const { data } = useQuery("pendingRequests", () => fetchPendingRequests());
   return (
@@ -16,8 +16,9 @@ const PendingRequestsBox = () => {
       </h3>
       <ul className=" overflow-y-clip ">
         <ScrollArea className="h-full">
+          {error && <p>Failed to load pending requests: {error.message}</p>}
           {pendingRequests.map((request) => (
-            <Dialog>
+            <Dialog key={request.id}>
               <DialogTrigger asChild>
                 <li className="mb-2 flex items-center justify-between rounded-md border border-border p-3 hover:border-primary  ">
                   <p>{request.title}</p>{" "}

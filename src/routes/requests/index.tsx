@@ -11,6 +11,7 @@ import { Input } from "@/components/ui/input";
 import useRequests from "@/hooks/useRequests";
 import { useEffect, useState } from "react";
 import { IRequest } from "@/hooks/useRequests";
+
 export const Route = createFileRoute("/requests/")({
   component: () => RequestPage(),
 });
@@ -67,7 +68,7 @@ function RequestPage() {
       </div>
 
       <div className=" grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3">
-        {error && <p>{error}</p>}
+        {error && <p>{error.message}</p>}
         {isLoading && <p>Loading...</p>}
         {sortedRequests.map((request) => (
           <RequestCard key={request.id} request={request} />

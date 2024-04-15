@@ -4,6 +4,7 @@ import { RouterProvider, createRouter } from "@tanstack/react-router";
 import "./index.css";
 import "./App.css";
 import { routeTree } from "./routeTree.gen";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 
 // Create a new router instance
 const router = createRouter({ routeTree });
@@ -17,11 +18,22 @@ declare module "@tanstack/react-router" {
 
 // Render the app
 const rootElement = document.getElementById("app")!;
+const queryClient = new QueryClient({
+  defaultOptions: {
+    queries: {
+      refetchOnWindowFocus: false,
+      staleTime: 30_000,
+      gcTime: Infinity,
+    },
+  },
+});
 if (!rootElement.innerHTML) {
   const root = ReactDOM.createRoot(rootElement);
   root.render(
     <StrictMode>
-      <RouterProvider router={router} />
-    </StrictMode>
+      <QueryClientProvider client={queryClient}>
+        <RouterProvider router={router} />
+      </QueryClientProvider>
+    </StrictMode>,
   );
 }
