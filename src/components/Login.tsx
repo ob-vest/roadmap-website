@@ -1,6 +1,6 @@
 // import { useEffect } from "react";
-import { AxiosResponse } from "axios";
-import apiClient from "@/services/apiClient";
+import { AxiosRequestConfig, AxiosResponse } from "axios";
+import ApiClient from "@/services/apiClient";
 import AppleSignInButton, { AppleResponse } from "./AppleSignInButton";
 
 interface SessionCredentials {
@@ -13,10 +13,19 @@ const Login = () => {
     console.log("Success DATA:", data.authorization);
     console.log("Code:", data.authorization.code);
 
-    apiClient
-      .post("auth/login", {
+    // I DID SOME CHANGES HERE BUT I DIDNT CHECK IF IT WORKS
+    const requestConfig: AxiosRequestConfig = {
+      data: {
         code: data.authorization.code,
-      })
+      },
+    };
+    const apiClient = new ApiClient<SessionCredentials>(
+      "auth/login",
+      requestConfig,
+    );
+    const res = apiClient.post();
+
+    res
       .then((response: AxiosResponse<SessionCredentials>) => {
         localStorage.setItem(
           "authorizationToken",

@@ -5,12 +5,36 @@ import { Separator } from "@/components/ui/separator";
 import { Textarea } from "@/components/ui/textarea";
 import { Input } from "@/components/ui/input";
 import { IRequest } from "@/hooks/useRequests";
+import useUpdateRequest from "@/hooks/useUpdateRequest";
+import { useState } from "react";
 
 // export const Route = createFileRoute("/request-review")({
 //   component: () => ReviewPage(),
 // });
 
 function ReviewPage(props: { request: IRequest }) {
+  const [title, setTitle] = useState(props.request.title);
+  const [description, setDescription] = useState(props.request.description);
+  const [isTitleChecked, setIsTitleChecked] = useState(false);
+  const [isDescriptionChecked, setIsDescriptionChecked] = useState(false);
+
+  const updateRequest = useUpdateRequest({
+    id: props.request.id,
+  });
+
+  function setRequest() {
+    const updatedRequest = { ...props.request };
+    if (isTitleChecked) {
+      console.log("title checked");
+      updatedRequest.title = title;
+    }
+    if (isDescriptionChecked) {
+      console.log("description checked");
+      updatedRequest.description = description;
+    }
+    updateRequest(updatedRequest);
+  }
+
   return (
     <div className="p-2 pt-5 md:p-5">
       <div className="flex justify-end gap-3">
@@ -20,7 +44,9 @@ function ReviewPage(props: { request: IRequest }) {
         >
           Reject
         </Button>
-        <Button className="h-10 bg-foreground">Approve</Button>
+        <Button className="h-10 bg-foreground" onClick={() => setRequest()}>
+          Approve
+        </Button>
       </div>
       <div className="mt-10 grid gap-10 md:grid-cols-2">
         {/* CURRENT TEXT */}
@@ -42,6 +68,7 @@ function ReviewPage(props: { request: IRequest }) {
             <div className="flex items-center justify-between">
               <h3>Title:</h3>
               <Checkbox
+                onCheckedChange={() => setIsTitleChecked(!isTitleChecked)}
                 className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
                 id="ai-title"
               >
@@ -49,7 +76,8 @@ function ReviewPage(props: { request: IRequest }) {
               </Checkbox>
             </div>
             <Input
-              defaultValue={"A totally new idea. Pls add button"}
+              value={title}
+              onChange={(e) => setTitle(e.target.value)}
               type="text"
               className="mt-2 text-muted-foreground"
             />
@@ -59,26 +87,20 @@ function ReviewPage(props: { request: IRequest }) {
             <div className="flex items-center justify-between">
               <h3>Description:</h3>
               <Checkbox
+                onCheckedChange={() =>
+                  setIsDescriptionChecked(!isDescriptionChecked)
+                }
                 className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
                 id="ai-description"
               >
                 <label htmlFor="ai-description">Use this</label>
               </Checkbox>
             </div>
-            <Textarea className="mt-2 h-72 text-muted-foreground">
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec
-              vehicula, purus nec luctus vestibulum, nisl libero fermentum
-              ligula, nec consequat justo nisl vel ex. Donec vehicula, purus nec
-              luctus vestibulum, nisl libero fermentum ligula, nec consequat
-              justo nisl vel ex.
-            </Textarea>
-            {/* <p className="text-muted-foreground">
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec
-              vehicula, purus nec luctus vestibulum, nisl libero fermentum
-              ligula, nec consequat justo nisl vel ex. Donec vehicula, purus nec
-              luctus vestibulum, nisl libero fermentum ligula, nec consequat
-              justo nisl vel ex.
-            </p> */}
+            <Textarea
+              className="mt-2 h-72 text-muted-foreground"
+              value={description}
+              onChange={(e) => setDescription(e.target.value)}
+            />
           </div>
         </div>
       </div>

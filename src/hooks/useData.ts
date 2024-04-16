@@ -1,6 +1,6 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { useQuery } from "@tanstack/react-query";
-import apiClient from "../services/apiClient";
+import ApiClient from "../services/apiClient";
 import { AxiosRequestConfig } from "axios";
 
 // Interface used to explicitly define the type of data useData will need.
@@ -17,8 +17,9 @@ const useData = <T>({
   defaultData = [],
 }: UseDataParams<T>) => {
   const fetchData = async () => {
-    const res = await apiClient.get<T[]>(endpoint, requestConfig);
-    return res.data;
+    const apiClient = new ApiClient<T>(endpoint, requestConfig);
+    const data = await apiClient.getAll();
+    return data;
   };
 
   const {
