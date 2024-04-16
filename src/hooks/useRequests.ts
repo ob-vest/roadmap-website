@@ -8,6 +8,7 @@ export interface IRequest {
   commentCount: number;
   createdAt: Date;
   lastActivityAt: Date;
+  stateId: number;
 }
 
 const useRequests = () => {

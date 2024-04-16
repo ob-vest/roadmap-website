@@ -12,7 +12,10 @@ import { useState } from "react";
 //   component: () => ReviewPage(),
 // });
 
-function ReviewPage(props: { request: IRequest }) {
+function ReviewPage(props: {
+  request: IRequest;
+  setOpen: (open: boolean) => void;
+}) {
   const [title, setTitle] = useState(props.request.title);
   const [description, setDescription] = useState(props.request.description);
   const [isTitleChecked, setIsTitleChecked] = useState(false);
@@ -22,7 +25,11 @@ function ReviewPage(props: { request: IRequest }) {
     id: props.request.id,
   });
 
-  function setRequest() {
+  const handleClose = () => {
+    props.setOpen(false);
+  };
+
+  function approveRequest() {
     const updatedRequest = { ...props.request };
     if (isTitleChecked) {
       console.log("title checked");
@@ -32,7 +39,17 @@ function ReviewPage(props: { request: IRequest }) {
       console.log("description checked");
       updatedRequest.description = description;
     }
+    updatedRequest.stateId = 2;
+
     updateRequest(updatedRequest);
+    handleClose();
+  }
+
+  function rejectRequest() {
+    const updatedRequest = { ...props.request };
+    updatedRequest.stateId = 3;
+    updateRequest(updatedRequest);
+    handleClose();
   }
 
   return (
@@ -41,10 +58,11 @@ function ReviewPage(props: { request: IRequest }) {
         <Button
           className="h-10 text-red-600 hover:text-red-600"
           variant={"ghost"}
+          onClick={() => rejectRequest()}
         >
           Reject
         </Button>
-        <Button className="h-10 bg-foreground" onClick={() => setRequest()}>
+        <Button className="h-10 bg-foreground" onClick={() => approveRequest()}>
           Approve
         </Button>
       </div>
