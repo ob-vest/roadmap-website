@@ -7,6 +7,7 @@ import { Input } from "@/components/ui/input";
 import { IRequest } from "@/hooks/useRequests";
 import useUpdateRequest from "@/hooks/useUpdateRequest";
 import { useState } from "react";
+import { useQueryClient } from "@tanstack/react-query";
 
 // export const Route = createFileRoute("/request-review")({
 //   component: () => ReviewPage(),
@@ -20,6 +21,7 @@ function ReviewPage(props: {
   const [description, setDescription] = useState(props.request.description);
   const [isTitleChecked, setIsTitleChecked] = useState(false);
   const [isDescriptionChecked, setIsDescriptionChecked] = useState(false);
+  const queryClient = useQueryClient();
 
   const updateRequest = useUpdateRequest({
     id: props.request.id,
@@ -27,6 +29,10 @@ function ReviewPage(props: {
 
   const handleClose = () => {
     props.setOpen(false);
+    queryClient.invalidateQueries({
+      queryKey: ["pendingRequests"],
+      refetchType: "all",
+    });
   };
 
   function approveRequest() {
