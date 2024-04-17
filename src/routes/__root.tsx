@@ -2,7 +2,7 @@ import NavBar from "@/components/NavBar";
 import { Separator } from "@/components/ui/separator";
 import { createRootRoute, Outlet } from "@tanstack/react-router";
 import { TanStackRouterDevtools } from "@tanstack/router-devtools";
-
+import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 export const Route = createRootRoute({
   component: () => (
     <>
@@ -18,6 +18,7 @@ export const Route = createRootRoute({
       <Separator className="mb-10 mt-2" />
       <Outlet />
       <TanStackRouterDevtools />
+      <ReactQueryDevtools />
     </>
   ),
 });

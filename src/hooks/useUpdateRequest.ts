@@ -19,6 +19,7 @@ const useUpdateRequest = ({ id }: IUpdateRequest) => {
     console.log(endpoint);
     const apiClient = new ApiClient<IRequest>(endpoint, requestConfig);
     apiClient.update(id, data);
+    console.log("Request updated");
   };
 
   return updateRequest;

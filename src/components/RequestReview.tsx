@@ -28,11 +28,18 @@ function ReviewPage(props: {
   });
 
   const handleClose = () => {
+    console.log("closing");
     props.setOpen(false);
+
     queryClient.invalidateQueries({
       queryKey: ["pendingRequests"],
       refetchType: "all",
     });
+    queryClient.refetchQueries({
+      queryKey: ["pendingRequests"],
+    });
+    // For some reason, the refetchQueries function is not working as expected.
+    // It didnt refetch consistently, so I had to use the invalidateQueries function as well
   };
 
   function approveRequest() {
@@ -47,15 +54,13 @@ function ReviewPage(props: {
     }
     updatedRequest.stateId = 2;
 
-    updateRequest(updatedRequest);
-    handleClose();
+    updateRequest(updatedRequest).finally(() => handleClose());
   }
 
   function rejectRequest() {
     const updatedRequest = { ...props.request };
     updatedRequest.stateId = 3;
-    updateRequest(updatedRequest);
-    handleClose();
+    updateRequest(updatedRequest).finally(() => handleClose());
   }
 
   return (
