@@ -24,9 +24,9 @@ class ApiClient<T> {
       .get<T[]>(this.endpoint, this.requestConfig)
       .then((res) => res.data);
   };
-  get = async (id: number) => {
+  get = async (id?: number) => {
     const res = await axiosInstance.get<T>(
-      `${this.endpoint}/${id}`,
+      `${this.endpoint}/${id !== undefined ? id : ""}`,
       this.requestConfig,
     );
     return res.data;
