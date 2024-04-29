@@ -23,11 +23,7 @@ function RequestSuggestionBox({
   isDescriptionChecked: boolean;
   setIsDescriptionChecked: (isDescriptionChecked: boolean) => void;
 }) {
-  const {
-    data: suggestion,
-    error,
-    isLoading,
-  } = useSuggestionRequest({ title, description });
+  const { data: suggestion } = useSuggestionRequest({ title, description });
 
   return (
     <div className="flex flex-col gap-5 rounded-md border border-border p-5 text-left">

@@ -34,17 +34,17 @@ const StatisticsBox = () => {
       </div>
       {data && (
         <div className="flex h-20 flex-grow items-center justify-between py-5">
-          <div className="flex w-20 flex-col justify-center md:w-36">
+          <div className="mx-auto flex w-20 flex-col justify-center md:w-36">
             <h4 className="text-muted-foreground">Requests</h4>
             <p className="py-5 text-4xl font-semibold">{data.totalRequests}</p>
           </div>
           <Separator orientation="vertical" className="h-20" />
-          <div className="flex w-20 flex-col justify-center md:w-36">
+          <div className="mx-auto flex w-20 flex-col justify-center md:w-36">
             <h4 className="text-muted-foreground">Upvotes</h4>
             <p className="py-5 text-4xl font-semibold">{data.totalUpvotes}</p>
           </div>
           <Separator orientation="vertical" className="h-20" />
-          <div className="flex w-20 flex-col justify-center md:w-36">
+          <div className="mx-auto flex w-20 flex-col justify-center md:w-36">
             <h4 className="text-muted-foreground">Comments</h4>
             <p className="py-5 text-4xl font-semibold">{data.totalComments}</p>
           </div>
