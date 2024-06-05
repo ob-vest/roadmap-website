@@ -17,7 +17,8 @@ function UserListPage() {
       <div className="grid gap-3 md:grid-cols-2 lg:grid-cols-3">
         {users.map((userListItem: IUserListItem) => (
           <Link
-            to={`/users/${userListItem.id}`}
+            to="/users/$userId"
+            params={{ userId: userListItem.id.toString() }}
             className="w-full rounded-md border border-border text-left hover:border-primary"
             key={userListItem.id}
           >
