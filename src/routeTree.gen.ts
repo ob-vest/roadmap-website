@@ -16,6 +16,7 @@ import { Route as rootRoute } from './routes/__root'
 import { Route as LoginImport } from './routes/login'
 import { Route as UsersIndexImport } from './routes/users/index'
 import { Route as RequestsIndexImport } from './routes/requests/index'
+import { Route as UsersUserIdImport } from './routes/users/$userId'
 import { Route as RequestsRequestIdImport } from './routes/requests/$requestId'
 
 // Create Virtual Routes
@@ -44,6 +45,11 @@ const RequestsIndexRoute = RequestsIndexImport.update({
   getParentRoute: () => rootRoute,
 } as any)
 
+const UsersUserIdRoute = UsersUserIdImport.update({
+  path: '/users/$userId',
+  getParentRoute: () => rootRoute,
+} as any)
+
 const RequestsRequestIdRoute = RequestsRequestIdImport.update({
   path: '/requests/$requestId',
   getParentRoute: () => rootRoute,
@@ -65,6 +71,10 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof RequestsRequestIdImport
       parentRoute: typeof rootRoute
     }
+    '/users/$userId': {
+      preLoaderRoute: typeof UsersUserIdImport
+      parentRoute: typeof rootRoute
+    }
     '/requests/': {
       preLoaderRoute: typeof RequestsIndexImport
       parentRoute: typeof rootRoute
@@ -82,6 +92,7 @@ export const routeTree = rootRoute.addChildren([
   IndexLazyRoute,
   LoginRoute,
   RequestsRequestIdRoute,
+  UsersUserIdRoute,
   RequestsIndexRoute,
   UsersIndexRoute,
 ])
