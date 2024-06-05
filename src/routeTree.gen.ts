@@ -14,6 +14,7 @@ import { createFileRoute } from '@tanstack/react-router'
 
 import { Route as rootRoute } from './routes/__root'
 import { Route as LoginImport } from './routes/login'
+import { Route as UsersIndexImport } from './routes/users/index'
 import { Route as RequestsIndexImport } from './routes/requests/index'
 import { Route as RequestsRequestIdImport } from './routes/requests/$requestId'
 
@@ -32,6 +33,11 @@ const IndexLazyRoute = IndexLazyImport.update({
   path: '/',
   getParentRoute: () => rootRoute,
 } as any).lazy(() => import('./routes/index.lazy').then((d) => d.Route))
+
+const UsersIndexRoute = UsersIndexImport.update({
+  path: '/users/',
+  getParentRoute: () => rootRoute,
+} as any)
 
 const RequestsIndexRoute = RequestsIndexImport.update({
   path: '/requests/',
@@ -63,6 +69,10 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof RequestsIndexImport
       parentRoute: typeof rootRoute
     }
+    '/users/': {
+      preLoaderRoute: typeof UsersIndexImport
+      parentRoute: typeof rootRoute
+    }
   }
 }
 
@@ -73,6 +83,7 @@ export const routeTree = rootRoute.addChildren([
   LoginRoute,
   RequestsRequestIdRoute,
   RequestsIndexRoute,
+  UsersIndexRoute,
 ])
 
 /* prettier-ignore-end */
