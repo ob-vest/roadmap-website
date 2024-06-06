@@ -12,8 +12,9 @@ export const Route = createFileRoute("/users/")({
 });
 
 function UserListPage() {
+  const limit = 15;
   const [currentPage, setCurrentPage] = useState(1);
-  const { data, isLoading } = useUsers(currentPage);
+  const { data, isLoading } = useUsers(currentPage, limit);
 
   const handlePageChange = (pageNumber: number) => {
     setCurrentPage(pageNumber);
@@ -65,7 +66,7 @@ function UserListPage() {
           </div>
           <PaginationBar
             currentPage={currentPage}
-            totalPages={data.total / 10}
+            totalPages={Math.ceil(data.total / limit)}
             onPageChange={handlePageChange}
           />
         </div>

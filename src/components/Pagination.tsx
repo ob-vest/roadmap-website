@@ -25,7 +25,7 @@ export const PaginationBar = ({
           <PaginationPrevious
             href="#"
             onClick={() => onPageChange(currentPage - 1)}
-            aria-disabled="true"
+            className={`${currentPage === 1 ? "pointer-events-none text-muted-foreground" : ""}`}
           />
         </PaginationItem>
         {pageNumbers.map((number) => (
@@ -43,7 +43,7 @@ export const PaginationBar = ({
           <PaginationNext
             href="#"
             onClick={() => onPageChange(currentPage + 1)}
-            aria-disabled={currentPage === totalPages}
+            className={`${currentPage === totalPages ? "pointer-events-none text-muted-foreground" : ""}`}
           />
         </PaginationItem>
       </PaginationContent>
