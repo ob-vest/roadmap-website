@@ -1,5 +1,6 @@
 import { cn } from "@/lib/utils";
 
+// source: https://github.com/shadcn-ui/ui/discussions/1694#discussioncomment-7851248
 export interface ISVGProps extends React.SVGProps<SVGSVGElement> {
   size?: number;
   className?: string;

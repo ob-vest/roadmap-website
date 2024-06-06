@@ -1,3 +1,4 @@
+import useUserInformation from "@/hooks/useUserInformation";
 import { createFileRoute } from "@tanstack/react-router";
 
 export const Route = createFileRoute("/users/$userId")({
@@ -5,5 +6,8 @@ export const Route = createFileRoute("/users/$userId")({
 });
 
 function UserPage() {
-  return <div>UserPage</div>;
+  const { userId } = Route.useParams();
+
+  const { data: user } = useUserInformation(Number(userId));
+  return <div>{user?.displayName}</div>;
 }
