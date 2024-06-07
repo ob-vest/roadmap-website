@@ -1,11 +1,19 @@
 import { Button } from "@/components/ui/button";
 import { Popover, PopoverContent } from "@/components/ui/popover";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 import useComments from "@/hooks/useComments";
 import useRequest from "@/hooks/useRequest";
 import { distanceFromDate } from "@/utils/dateUtils";
 import { PopoverTrigger } from "@radix-ui/react-popover";
 import { Link, createFileRoute } from "@tanstack/react-router";
 import { ArrowUp, MessageSquare } from "lucide-react";
+import { RequestState } from "@/models/Request";
 
 export const Route = createFileRoute("/requests/$requestId")({
   component: () => RequestPage(),
@@ -15,6 +23,9 @@ function RequestPage() {
   const { data: request } = useRequest(requestId);
   const { data: comments } = useComments(requestId);
 
+  const handleSortChange = (value: string) => {
+    console.log(value);
+  };
   return (
     <div className="flex flex-col gap-5">
       {request !== undefined && (
@@ -35,10 +46,21 @@ function RequestPage() {
                 <p>{request.commentCount}</p>
               </div>
             </div>
-
-            <Button variant={"destructive"} className="w-fit">
-              Delete Request
-            </Button>
+            <Select
+              defaultValue={request.stateId.toString()}
+              onValueChange={handleSortChange}
+            >
+              <SelectTrigger className="w-36">
+                <SelectValue />
+              </SelectTrigger>
+              <SelectContent>
+                {Object.entries(RequestState).map(([value, label]) => (
+                  <SelectItem key={value} value={value}>
+                    {label}
+                  </SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
           </div>
         </div>
       )}
@@ -55,10 +77,11 @@ function RequestPage() {
                 >
                   <div className="flex justify-between">
                     <Popover>
-                      <PopoverTrigger>
-                        <Button variant={"outline"} className="w-fit">
-                          {comment.userId}: {comment.displayName}
-                        </Button>
+                      <PopoverTrigger className="w-fit rounded-md border border-border px-2 py-1 text-base">
+                        <span className="text-muted-foreground">
+                          {comment.userId}:
+                        </span>{" "}
+                        {comment.displayName}
                       </PopoverTrigger>
                       <PopoverContent className="w-40 border-border">
                         <div className="flex flex-col gap-2">
