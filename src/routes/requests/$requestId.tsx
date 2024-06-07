@@ -1,38 +1,48 @@
 import { Button } from "@/components/ui/button";
 import { Popover, PopoverContent } from "@/components/ui/popover";
 import useComments from "@/hooks/useComments";
+import useRequest from "@/hooks/useRequest";
 import { distanceFromDate } from "@/utils/dateUtils";
 import { PopoverTrigger } from "@radix-ui/react-popover";
 import { Link, createFileRoute } from "@tanstack/react-router";
+import { ArrowUp, MessageSquare } from "lucide-react";
 
 export const Route = createFileRoute("/requests/$requestId")({
   component: () => RequestPage(),
 });
 function RequestPage() {
   const { requestId } = Route.useParams();
+  const { data: request } = useRequest(Number(requestId));
   const { data: comments } = useComments(requestId);
+
   return (
     <div className="flex flex-col gap-5">
-      <div className="flex flex-col rounded-md border border-border p-4 text-left">
-        <h2 className="mb-10">Request #{requestId}</h2>
-        <h3>Title</h3>
-        <p className="text-muted-foreground">
-          A totally new idea. Pls add button
-        </p>
-        <h3 className="mb-2">Description</h3>
-        <p className="text-muted-foreground">
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec
-          vehicula, purus nec luctus vestibulum, nisl libero fermentum ligula,
-          nec consequat justo nisl vel ex. Donec vehicula, purus nec luctus
-          vestibulum, nisl libero fermentum ligula, nec consequat justo nisl vel
-          ex.
-        </p>
-        <div className="ml-auto flex gap-3">
-          <Button variant={"destructive"} className="w-fit">
-            Delete Request
-          </Button>
+      {request !== undefined && (
+        <div className="flex flex-col rounded-md border border-border p-4 text-left">
+          <h2 className="mb-10">Request #{requestId}</h2>
+          <h3>Title</h3>
+          <p className="text-muted-foreground">{request.title}</p>
+          <h3 className="mb-2">Description</h3>
+          <p className="text-muted-foreground">{request.description}</p>
+          <div className="mt-2 flex items-end justify-between gap-3">
+            <div className="flex  gap-4 ">
+              <div className="flex items-center gap-1">
+                <ArrowUp className="h-5 text-sm text-muted-foreground" />
+                <p>{request.upvoteCount}</p>
+              </div>
+              <div className="flex items-center gap-1">
+                <MessageSquare className="h-5 text-sm text-muted-foreground" />
+                <p>{request.commentCount}</p>
+              </div>
+            </div>
+
+            <Button variant={"destructive"} className="w-fit">
+              Delete Request
+            </Button>
+          </div>
         </div>
-      </div>
+      )}
+
       <div>
         {comments.length > 0 && (
           <div className="flex flex-col rounded-md border border-border p-4 text-left">
