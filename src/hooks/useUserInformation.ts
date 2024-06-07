@@ -17,6 +17,7 @@ interface IUserInfoComment {
   text: string;
   createdAt: Date;
   isApproved: boolean;
+  requestId: number;
 }
 
 const useUserInformation = (userId: number) => {

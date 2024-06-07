@@ -1,5 +1,5 @@
 import useUserInformation from "@/hooks/useUserInformation";
-import { createFileRoute } from "@tanstack/react-router";
+import { Link, createFileRoute } from "@tanstack/react-router";
 import { distanceFromDate } from "@/utils/dateUtils";
 import RequestCard from "@/components/RequestCard";
 import { Check, X } from "lucide-react";
@@ -19,7 +19,8 @@ function UserPage() {
         <div>
           <div className="flex flex-col items-start gap-2 rounded-lg border border-muted p-2">
             <h2 className="mx-auto">
-              #{user.id} {user.displayName}
+              <span className="text-muted-foreground">{user.id}:</span>{" "}
+              {user.displayName}
             </h2>
 
             <div className="flex h-8 items-center rounded-md border border-muted px-2 py-1">
@@ -39,12 +40,14 @@ function UserPage() {
               )}
             </div>
           </div>
-          <p className="mb-5">
+          <p className="mb-5 text-right">
             <span className="text-muted-foreground ">Joined:</span>{" "}
             {distanceFromDate(user.createdAt)}
           </p>
           <div>
-            <h3 className="mb-2">Requests by {user.displayName}</h3>
+            <h3 className="mb-2 text-muted-foreground">
+              Requests made by {user.displayName}
+            </h3>
             {user.requests.length > 0 ? (
               <div className=" grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3">
                 {user.requests.map((request) => (
@@ -57,19 +60,23 @@ function UserPage() {
           </div>
 
           <div className="mt-5">
-            <h3 className="mb-2">Comments by {user.displayName}</h3>
+            <h3 className="mb-2 text-muted-foreground">
+              Comments made by {user.displayName}
+            </h3>
             {user.comments.length > 0 ? (
               <div className=" grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3">
                 {user.comments.map((comment) => (
-                  <div
-                    className="rounded-md border border-muted p-2"
+                  <Link
+                    className="rounded-md border border-muted px-2 pt-2 hover:border-primary"
                     key={comment.id}
+                    to="/requests/$requestId"
+                    params={{ requestId: comment.requestId.toString() }}
                   >
                     <p>{comment.text}</p>
                     <p className="text-right text-muted-foreground">
                       {distanceFromDate(comment.createdAt)}
                     </p>
-                  </div>
+                  </Link>
                 ))}
               </div>
             ) : (

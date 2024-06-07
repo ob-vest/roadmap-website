@@ -39,7 +39,10 @@ function RequestPage() {
             <h2 className="mb-5 text-center">Comment section</h2>
             <ul className="grid gap-3 md:grid-cols-2">
               {comments.map((comment) => (
-                <li className="flex flex-col gap-3 rounded-md border border-border p-3 ">
+                <li
+                  className="flex flex-col gap-3 rounded-md border border-border p-3"
+                  key={comment.id}
+                >
                   <div className="flex justify-between">
                     <Popover>
                       <PopoverTrigger>
