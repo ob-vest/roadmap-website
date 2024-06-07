@@ -7,6 +7,7 @@ import { Link } from "@tanstack/react-router";
 import { PaginationBar } from "@/components/Pagination";
 import { useState } from "react";
 import { LoadingSpinner } from "@/components/LoadingSpinner";
+
 export const Route = createFileRoute("/users/")({
   component: () => UserListPage(),
 });

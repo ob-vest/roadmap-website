@@ -41,7 +41,7 @@ function UserPage() {
             </div>
           </div>
           <p className="mb-5 text-right">
-            <span className="text-muted-foreground ">Joined:</span>{" "}
+            <span className="text-muted-foreground">Joined:</span>{" "}
             {distanceFromDate(user.createdAt)}
           </p>
           <div>
@@ -72,7 +72,7 @@ function UserPage() {
                     to="/requests/$requestId"
                     params={{ requestId: comment.requestId.toString() }}
                   >
-                    <p>{comment.text}</p>
+                    <p className="pb-1 pt-2 text-left">{comment.text}</p>
                     <p className="text-right text-muted-foreground">
                       {distanceFromDate(comment.createdAt)}
                     </p>

@@ -12,7 +12,7 @@ export const Route = createFileRoute("/requests/$requestId")({
 });
 function RequestPage() {
   const { requestId } = Route.useParams();
-  const { data: request } = useRequest(Number(requestId));
+  const { data: request } = useRequest(requestId);
   const { data: comments } = useComments(requestId);
 
   return (
@@ -25,7 +25,7 @@ function RequestPage() {
           <h3 className="mb-2">Description</h3>
           <p className="text-muted-foreground">{request.description}</p>
           <div className="mt-2 flex items-end justify-between gap-3">
-            <div className="flex  gap-4 ">
+            <div className="flex gap-4">
               <div className="flex items-center gap-1">
                 <ArrowUp className="h-5 text-sm text-muted-foreground" />
                 <p>{request.upvoteCount}</p>
@@ -57,7 +57,7 @@ function RequestPage() {
                     <Popover>
                       <PopoverTrigger>
                         <Button variant={"outline"} className="w-fit">
-                          {comment.id}: {comment.displayName}
+                          {comment.userId}: {comment.displayName}
                         </Button>
                       </PopoverTrigger>
                       <PopoverContent className="w-40 border-border">

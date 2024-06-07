@@ -2,7 +2,7 @@ import { IRequest } from "./useRequests";
 import ApiClient from "../services/apiClient";
 import { useQuery } from "@tanstack/react-query";
 
-const useRequest = (requestId: number) => {
+const useRequest = (requestId: string) => {
   const fetchRequest = async () => {
     const apiClient = new ApiClient<IRequest>("requests/" + requestId);
     const data = await apiClient.get();
