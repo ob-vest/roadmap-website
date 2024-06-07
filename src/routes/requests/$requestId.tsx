@@ -1,7 +1,9 @@
 import { Button } from "@/components/ui/button";
+import { Popover, PopoverContent } from "@/components/ui/popover";
 import useComments from "@/hooks/useComments";
 import { distanceFromDate } from "@/utils/dateUtils";
-import { createFileRoute } from "@tanstack/react-router";
+import { PopoverTrigger } from "@radix-ui/react-popover";
+import { Link, createFileRoute } from "@tanstack/react-router";
 
 export const Route = createFileRoute("/requests/$requestId")({
   component: () => RequestPage(),
@@ -39,9 +41,27 @@ function RequestPage() {
               {comments.map((comment) => (
                 <li className="flex flex-col gap-3 rounded-md border border-border p-3 ">
                   <div className="flex justify-between">
-                    <Button variant={"outline"} className="w-fit">
-                      {comment.id}: {comment.displayName}
-                    </Button>
+                    <Popover>
+                      <PopoverTrigger>
+                        <Button variant={"outline"} className="w-fit">
+                          {comment.id}: {comment.displayName}
+                        </Button>
+                      </PopoverTrigger>
+                      <PopoverContent className="w-40 border-border">
+                        <div className="flex flex-col gap-2">
+                          <Link
+                            to="/users/$userId"
+                            params={{ userId: comment.userId.toString() }}
+                            className="rounded-md border border-border bg-transparent p-2 text-sm text-primary hover:bg-primary hover:text-black"
+                          >
+                            Go to user page
+                          </Link>
+                          <Button className="border border-border bg-transparent text-red-700 hover:bg-red-700 hover:text-white">
+                            Block user
+                          </Button>
+                        </div>
+                      </PopoverContent>
+                    </Popover>
 
                     <p className="ml-2 text-xs text-muted-foreground">
                       {distanceFromDate(comment.createdAt)}
