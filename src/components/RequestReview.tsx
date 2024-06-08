@@ -52,13 +52,19 @@ function ReviewPage(props: {
     }
     updatedRequest.stateId = 2;
 
-    updateRequest(updatedRequest).finally(() => handleClose());
+    updateRequest({
+      title: updatedRequest.title,
+      description: updatedRequest.description,
+      stateId: updatedRequest.stateId,
+    }).finally(() => handleClose());
   }
 
   function rejectRequest() {
     const updatedRequest = { ...props.request };
     updatedRequest.stateId = 3;
-    updateRequest(updatedRequest).finally(() => handleClose());
+    updateRequest({ stateId: updatedRequest.stateId }).finally(() =>
+      handleClose(),
+    );
   }
 
   return (

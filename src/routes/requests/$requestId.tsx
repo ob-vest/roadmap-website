@@ -14,6 +14,7 @@ import { PopoverTrigger } from "@radix-ui/react-popover";
 import { Link, createFileRoute } from "@tanstack/react-router";
 import { ArrowUp, MessageSquare } from "lucide-react";
 import { RequestState } from "@/models/Request";
+import useUpdateRequest from "@/hooks/useUpdateRequest";
 
 export const Route = createFileRoute("/requests/$requestId")({
   component: () => RequestPage(),
@@ -23,8 +24,14 @@ function RequestPage() {
   const { data: request } = useRequest(requestId);
   const { data: comments } = useComments(requestId);
 
+  const updateRequest = useUpdateRequest({
+    id: Number(requestId),
+  });
   const handleSortChange = (value: string) => {
     console.log(value);
+    updateRequest({
+      stateId: Number(value),
+    });
   };
   return (
     <div className="flex flex-col gap-5">

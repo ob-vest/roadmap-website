@@ -1,24 +1,31 @@
 import ApiClient from "../services/apiClient";
 import { AxiosRequestConfig } from "axios";
-import { IRequest } from "./useRequests";
-
 interface IUpdateRequest {
   id: number;
 }
 
+type UpdateRequestParams = {
+  title?: string;
+  description?: string;
+  stateId?: number;
+};
 const useUpdateRequest = ({ id }: IUpdateRequest) => {
-  const updateRequest = async (data: IRequest) => {
+  const updateRequest = async (params: UpdateRequestParams) => {
     const requestConfig: AxiosRequestConfig = {
       data: {
-        title: data.title,
-        description: data.description,
+        title: params.title,
+        description: params.description,
+        stateId: params.stateId,
       },
     };
     console.log("Updating request");
     const endpoint = `/admin/requests`;
     console.log(endpoint);
-    const apiClient = new ApiClient<IRequest>(endpoint, requestConfig);
-    apiClient.update(id, data);
+    const apiClient = new ApiClient<UpdateRequestParams>(
+      endpoint,
+      requestConfig,
+    );
+    apiClient.update(id, params);
     console.log("Request updated");
   };
 
