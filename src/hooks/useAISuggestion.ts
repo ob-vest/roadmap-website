@@ -1,12 +1,12 @@
 import { useQuery } from "@tanstack/react-query";
 import ApiClient from "../services/apiClient";
 
-interface ISuggestion {
+export interface ISuggestion {
   title: string;
   description: string;
 }
 
-const useSuggestionRequest = (userContent: ISuggestion) => {
+const useSuggestionRequest = (requestId: number, userContent: ISuggestion) => {
   const fetchSuggestion = async () => {
     console.log("Posting suggestion");
     const endpoint = `/admin/suggestion`;
@@ -20,8 +20,10 @@ const useSuggestionRequest = (userContent: ISuggestion) => {
   };
 
   const { data, isLoading, isError, error } = useQuery<ISuggestion, Error>({
-    queryKey: [userContent],
+    queryKey: ["suggest-", requestId],
     queryFn: fetchSuggestion,
+    refetchOnWindowFocus: false,
+    refetchOnReconnect: false,
   });
 
   return { data, isLoading, isError, error };

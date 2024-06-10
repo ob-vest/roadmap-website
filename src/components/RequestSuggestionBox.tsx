@@ -2,9 +2,10 @@ import { Checkbox } from "@/components/ui/checkbox";
 import { Separator } from "@/components/ui/separator";
 import { Textarea } from "@/components/ui/textarea";
 import { Input } from "@/components/ui/input";
-import useSuggestionRequest from "@/hooks/useAISuggestion";
+import useSuggestionRequest, { ISuggestion } from "@/hooks/useAISuggestion";
 
 function RequestSuggestionBox({
+  requestId,
   title,
   description,
   setTitle,
@@ -14,6 +15,7 @@ function RequestSuggestionBox({
   isDescriptionChecked,
   setIsDescriptionChecked,
 }: {
+  requestId: number;
   title: string;
   description: string;
   setTitle: (title: string) => void;
@@ -23,7 +25,12 @@ function RequestSuggestionBox({
   isDescriptionChecked: boolean;
   setIsDescriptionChecked: (isDescriptionChecked: boolean) => void;
 }) {
-  const { data: suggestion } = useSuggestionRequest({ title, description });
+  const userContent: ISuggestion = {
+    title: title,
+    description: description,
+  };
+
+  const { data: suggestion } = useSuggestionRequest(requestId, userContent);
 
   return (
     <div className="flex flex-col gap-5 rounded-md border border-border p-5 text-left">
@@ -43,7 +50,7 @@ function RequestSuggestionBox({
               </Checkbox>
             </div>
             <Input
-              value={suggestion.title}
+              defaultValue={suggestion.title}
               onChange={(e) => setTitle(e.target.value)}
               type="text"
               className="mt-2 text-muted-foreground"
@@ -65,7 +72,7 @@ function RequestSuggestionBox({
             </div>
             <Textarea
               className="mt-2 h-72 text-muted-foreground"
-              value={suggestion.description}
+              defaultValue={suggestion.description}
               onChange={(e) => setDescription(e.target.value)}
             />
           </div>

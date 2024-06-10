@@ -30,11 +30,11 @@ function ReviewPage(props: {
     props.setOpen(false);
 
     queryClient.invalidateQueries({
-      queryKey: ["pendingRequests"],
+      queryKey: ["pendingRequests", "requests"],
       refetchType: "all",
     });
     queryClient.refetchQueries({
-      queryKey: ["pendingRequests"],
+      queryKey: ["pendingRequests", "requests"],
     });
     // For some reason, the refetchQueries function is not working as expected.
     // It didnt refetch consistently, so I had to use the invalidateQueries function as well
@@ -95,6 +95,7 @@ function ReviewPage(props: {
         </div>
         {/* AI SUGGESTED TEXT*/}
         <RequestSuggestionBox
+          requestId={props.request.id}
           title={title}
           description={description}
           setTitle={setTitle}
