@@ -15,7 +15,8 @@ import { Link, createFileRoute } from "@tanstack/react-router";
 import { ArrowUp, MessageSquare } from "lucide-react";
 import { RequestState } from "@/models/Request";
 import useUpdateRequest from "@/hooks/useUpdateRequest";
-
+import { useMutation } from "@tanstack/react-query";
+import useBlockRequest, { BlockUser } from "@/hooks/useBlockUser";
 export const Route = createFileRoute("/requests/$requestId")({
   component: () => RequestPage(),
 });
@@ -33,6 +34,16 @@ function RequestPage() {
       stateId: Number(value),
     });
   };
+
+  const mutation = useMutation({
+    mutationFn: async (blockUser: BlockUser) => {
+      console.log("blocking user");
+      // eslint-disable-next-line react-hooks/rules-of-hooks
+      const request = await useBlockRequest(blockUser);
+      console.log(request);
+      return request;
+    },
+  });
   return (
     <div className="flex flex-col gap-5">
       {request !== undefined && (
@@ -99,7 +110,15 @@ function RequestPage() {
                           >
                             Go to user page
                           </Link>
-                          <Button className="border border-border bg-transparent text-red-700 hover:bg-red-700 hover:text-white">
+                          <Button
+                            onClick={() =>
+                              mutation.mutate({
+                                userId: comment.userId,
+                                block: true,
+                              })
+                            }
+                            className="border border-border bg-transparent text-red-700 hover:bg-red-700 hover:text-white"
+                          >
                             Block user
                           </Button>
                         </div>
