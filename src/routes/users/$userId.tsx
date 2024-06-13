@@ -25,7 +25,10 @@ function UserPage() {
       console.log(request);
       if (request.status === 200) {
         toast(`User has been ${blockUser.block ? "" : "un"}blocked`);
-        user.isBlocked = blockUser.block;
+
+        if (user) {
+          user.isBlocked = blockUser.block;
+        }
       } else {
         toast("Error: Failed to block user");
       }
