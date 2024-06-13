@@ -17,6 +17,8 @@ import { RequestState } from "@/models/Request";
 import useUpdateRequest from "@/hooks/useUpdateRequest";
 import { useMutation } from "@tanstack/react-query";
 import useBlockRequest, { BlockUser } from "@/hooks/useBlockUser";
+import { toast } from "sonner";
+
 export const Route = createFileRoute("/requests/$requestId")({
   component: () => RequestPage(),
 });
@@ -41,6 +43,12 @@ function RequestPage() {
       // eslint-disable-next-line react-hooks/rules-of-hooks
       const request = await useBlockRequest(blockUser);
       console.log(request);
+      if (request.status === 200) {
+        toast("User has been blocked");
+      } else {
+        toast("Error: Failed to block user");
+      }
+
       return request;
     },
   });

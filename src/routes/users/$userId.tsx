@@ -3,6 +3,10 @@ import { Link, createFileRoute } from "@tanstack/react-router";
 import { distanceFromDate } from "@/utils/dateUtils";
 import RequestCard from "@/components/RequestCard";
 import { Check, X } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import useBlockRequest, { BlockUser } from "@/hooks/useBlockUser";
+import { useMutation } from "@tanstack/react-query";
+import { toast } from "sonner";
 
 export const Route = createFileRoute("/users/$userId")({
   component: () => UserPage(),
@@ -12,6 +16,24 @@ function UserPage() {
   const { userId } = Route.useParams();
 
   const { data: user } = useUserInformation(Number(userId));
+
+  const mutation = useMutation({
+    mutationFn: async (blockUser: BlockUser) => {
+      console.log("blocking user");
+      // eslint-disable-next-line react-hooks/rules-of-hooks
+      const request = await useBlockRequest(blockUser);
+      console.log(request);
+      if (request.status === 200) {
+        toast(`User has been ${blockUser.block ? "" : "un"}blocked`);
+        user.isBlocked = blockUser.block;
+      } else {
+        toast("Error: Failed to block user");
+      }
+
+      return request;
+    },
+  });
+
   return (
     <section>
       <h1 className="mb-5">User page</h1>
@@ -22,22 +44,36 @@ function UserPage() {
               <span className="text-muted-foreground">{user.id}:</span>{" "}
               {user.displayName}
             </h2>
-
-            <div className="flex h-8 items-center rounded-md border border-muted px-2 py-1">
-              <p className="text-muted-foreground">Is admin:</p>
-              {user.isAdmin ? (
-                <Check className="text-primary" />
-              ) : (
-                <X className="text-sm text-red-400" />
-              )}
-            </div>
-            <div className="flex h-8 items-center rounded-md border border-muted px-2 py-1">
-              <p className="text-muted-foreground">Is blocked:</p>
-              {user.isBlocked ? (
-                <Check className="text-primary" />
-              ) : (
-                <X className="text-red-400" />
-              )}
+            <div className="flex w-full items-end justify-between">
+              <div>
+                <div className="flex h-8 items-center rounded-md border border-muted px-2 py-1">
+                  <p className="text-muted-foreground">Is admin:</p>
+                  {user.isAdmin ? (
+                    <Check className="text-primary" />
+                  ) : (
+                    <X className="text-sm text-red-400" />
+                  )}
+                </div>
+                <div className="flex h-8 items-center rounded-md border border-muted px-2 py-1">
+                  <p className="text-muted-foreground">Is blocked:</p>
+                  {user.isBlocked ? (
+                    <Check className="text-primary" />
+                  ) : (
+                    <X className="text-red-400" />
+                  )}
+                </div>
+              </div>
+              <Button
+                variant={user.isBlocked ? "default" : "destructive"}
+                onClick={() =>
+                  mutation.mutate({
+                    userId: user.id,
+                    block: !user.isBlocked,
+                  })
+                }
+              >
+                {user.isBlocked ? "Unblock user" : "Block user"}
+              </Button>
             </div>
           </div>
           <p className="mb-5 text-right">
