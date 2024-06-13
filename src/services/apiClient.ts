@@ -42,6 +42,13 @@ class ApiClient<T> {
       this.requestConfig,
     );
   };
+
+  delete = async (id: number) => {
+    return axiosInstance.delete<T>(
+      `${this.endpoint}/${id}`,
+      this.requestConfig,
+    );
+  };
 }
 
 export default ApiClient;

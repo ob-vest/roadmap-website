@@ -15,9 +15,10 @@ import { Link, createFileRoute } from "@tanstack/react-router";
 import { ArrowUp, MessageSquare } from "lucide-react";
 import { RequestState } from "@/models/Request";
 import useUpdateRequest from "@/hooks/useUpdateRequest";
-import { useMutation } from "@tanstack/react-query";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import useBlockRequest, { BlockUser } from "@/hooks/useBlockUser";
 import { toast } from "sonner";
+import { useDeleteComment } from "@/hooks/useDeleteComment";
 
 export const Route = createFileRoute("/requests/$requestId")({
   component: () => RequestPage(),
@@ -26,6 +27,8 @@ function RequestPage() {
   const { requestId } = Route.useParams();
   const { data: request } = useRequest(requestId);
   const { data: comments } = useComments(requestId);
+
+  const queryClient = useQueryClient();
 
   const updateRequest = useUpdateRequest({
     id: Number(requestId),
@@ -52,6 +55,30 @@ function RequestPage() {
       return request;
     },
   });
+  const deleteComment = useMutation({
+    mutationFn: async (commentId: number) => {
+      console.log("deleting comment");
+      // eslint-disable-next-line react-hooks/rules-of-hooks
+      const request = await useDeleteComment(commentId);
+      console.log(request);
+
+      if (request.status === 200) {
+        toast("Comment has been deleted");
+        queryClient.removeQueries({
+          queryKey: ["comments" + requestId],
+        });
+
+        // queryClient.refetchQueries({
+        //   queryKey: ["comments" + requestId],
+        // });
+      } else {
+        toast("Error: Failed to delete comment");
+      }
+
+      return request;
+    },
+  });
+
   return (
     <div className="flex flex-col gap-5">
       {request !== undefined && (
@@ -140,6 +167,7 @@ function RequestPage() {
                   <div className="flex items-end justify-between">
                     <p className="text-muted-foreground">{comment.text}</p>
                     <Button
+                      onClick={() => deleteComment.mutate(comment.id)}
                       variant={"outline"}
                       className="w-fit text-destructive hover:text-destructive"
                     >
