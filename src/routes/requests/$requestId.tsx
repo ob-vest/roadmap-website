@@ -7,6 +7,18 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from "@/components/ui/alert-dialog";
+
 import useComments from "@/hooks/useComments";
 import useRequest from "@/hooks/useRequest";
 import { distanceFromDate } from "@/utils/dateUtils";
@@ -166,13 +178,39 @@ function RequestPage() {
                   </div>
                   <div className="flex items-end justify-between">
                     <p className="text-muted-foreground">{comment.text}</p>
-                    <Button
+                    {/* <Button
                       onClick={() => deleteComment.mutate(comment.id)}
                       variant={"outline"}
                       className="w-fit text-destructive hover:text-destructive"
                     >
                       Delete
-                    </Button>
+                    </Button> */}
+                    <AlertDialog>
+                      <AlertDialogTrigger className=" w-fit rounded-md border border-border px-2 py-2 text-sm text-destructive hover:bg-destructive hover:text-destructive-foreground">
+                        Delete
+                      </AlertDialogTrigger>
+                      <AlertDialogContent>
+                        <AlertDialogHeader>
+                          <AlertDialogTitle>
+                            Are you sure that you want to delete the comment?
+                          </AlertDialogTitle>
+                          <AlertDialogDescription>
+                            This action cannot be undone. This will permanently
+                            delete the comment and remove the data from the
+                            database.
+                          </AlertDialogDescription>
+                        </AlertDialogHeader>
+                        <AlertDialogFooter>
+                          <AlertDialogCancel>Cancel</AlertDialogCancel>
+                          <AlertDialogAction
+                            className="text-destructive hover:bg-destructive hover:text-destructive-foreground "
+                            onClick={() => deleteComment.mutate(comment.id)}
+                          >
+                            Delete
+                          </AlertDialogAction>
+                        </AlertDialogFooter>
+                      </AlertDialogContent>
+                    </AlertDialog>
                   </div>
                 </li>
               ))}
