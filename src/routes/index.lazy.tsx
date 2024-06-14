@@ -1,6 +1,4 @@
-import { createLazyFileRoute, useNavigate } from "@tanstack/react-router";
-import { useEffect } from "react";
-// import DashboardBox from "@/components/DashboardBox";
+import { createLazyFileRoute } from "@tanstack/react-router";
 import PendingRequestsList from "@/components/PendingRequestsList";
 import StatisticsBox from "@/components/StatisticsBox";
 export const Route = createLazyFileRoute("/")({
@@ -8,14 +6,6 @@ export const Route = createLazyFileRoute("/")({
 });
 
 function Index() {
-  const navigate = useNavigate();
-
-  useEffect(() => {
-    const token = localStorage.getItem("authorizationToken");
-    if (!token) {
-      //   navigate({ to: "/login" });
-    }
-  }, [navigate]);
   return (
     <div>
       <h1 className="pb-10 text-3xl font-bold">Overview</h1>

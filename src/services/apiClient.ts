@@ -10,6 +10,20 @@ const axiosInstance = axios.create({
   baseURL: apiHost,
 });
 
+// Response interceptor
+axiosInstance.interceptors.response.use(
+  (response) => {
+    // Any status code that lie within the range of 2xx cause this function to trigger
+    return response;
+  },
+  (error) => {
+    // Any status codes that falls outside the range of 2xx cause this function to trigger
+    if (error.response && error.response.status === 401) {
+      localStorage.removeItem("authorizationToken");
+    }
+    return Promise.reject(error);
+  },
+);
 class ApiClient<T> {
   endpoint: string;
   requestConfig?: AxiosRequestConfig;
@@ -17,6 +31,16 @@ class ApiClient<T> {
   constructor(endpoint: string, requestConfig?: AxiosRequestConfig) {
     this.endpoint = endpoint;
     this.requestConfig = requestConfig;
+    if (!this.requestConfig) {
+      this.requestConfig = {};
+    }
+    const token = localStorage.getItem("authorizationToken");
+
+    if (token) {
+      this.requestConfig.headers = {
+        Authorization: `Bearer ${token}`,
+      };
+    }
   }
 
   getAll = async () => {

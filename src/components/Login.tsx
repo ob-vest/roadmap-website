@@ -13,7 +13,6 @@ const Login = () => {
     console.log("Success DATA:", data.authorization);
     console.log("Code:", data.authorization.code);
 
-    // I DID SOME CHANGES HERE BUT I DIDNT CHECK IF IT WORKS
     const requestConfig: AxiosRequestConfig = {
       data: {
         code: data.authorization.code,
@@ -23,7 +22,7 @@ const Login = () => {
       "auth/login",
       requestConfig,
     );
-    const res = apiClient.post();
+    const res = apiClient.post(requestConfig.data);
 
     res
       .then((response: AxiosResponse<SessionCredentials>) => {
