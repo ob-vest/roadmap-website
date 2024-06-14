@@ -2,6 +2,7 @@
 import { AxiosRequestConfig, AxiosResponse } from "axios";
 import ApiClient from "@/services/apiClient";
 import AppleSignInButton, { AppleResponse } from "./AppleSignInButton";
+import { useNavigate } from "@tanstack/react-router";
 
 interface SessionCredentials {
   appleUserId: string;
@@ -9,6 +10,7 @@ interface SessionCredentials {
 }
 
 const Login = () => {
+  const navigate = useNavigate();
   const handleSuccess = (data: AppleResponse) => {
     console.log("Success DATA:", data.authorization);
     console.log("Code:", data.authorization.code);
@@ -30,6 +32,7 @@ const Login = () => {
           "authorizationToken",
           response.data.authorizationToken,
         );
+        navigate({ to: "/" });
       })
       .catch((error) => console.error("Error:", error));
   };

@@ -18,12 +18,11 @@ function Root() {
   const navigate = useNavigate();
   const routerState = useRouterState();
   useEffect(() => {
-    const location = routerState.location;
     const token = localStorage.getItem("authorizationToken");
     if (!token && window.location.pathname !== "/login") {
       navigate({ to: "/login" });
     }
-  }, [navigate, location]);
+  }, [navigate, routerState.location]);
   return (
     <>
       <NavBar />
