@@ -57,6 +57,7 @@ class ApiClient<T> {
   };
 
   post = async (data?: T) => {
+    console.log("data", data);
     return axiosInstance.post<T>(this.endpoint, data, this.requestConfig);
   };
   update = async (id: number, data: T) => {

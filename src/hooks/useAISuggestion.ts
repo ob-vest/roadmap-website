@@ -5,18 +5,29 @@ export interface ISuggestion {
   title: string;
   description: string;
 }
-
+interface ISuggestionRequest {
+  text: string;
+}
 const useSuggestionRequest = (requestId: number, userContent: ISuggestion) => {
   const fetchSuggestion = async () => {
     console.log("Posting suggestion");
     const endpoint = `/admin/suggestion`;
     console.log(endpoint);
-    const apiClient = new ApiClient<ISuggestion>(endpoint);
+    const apiClient = new ApiClient<ISuggestionRequest>(endpoint);
 
-    const res = await apiClient.post(userContent);
-
+    const resTitle = await apiClient.post({ text: userContent.title });
+    const resDescription = await apiClient.post({
+      text: userContent.description,
+    });
     console.log("Suggestion posted");
-    return res.data;
+
+    const data: ISuggestion = {
+      title: resTitle.data.text,
+      description: resDescription.data.text,
+    };
+
+    console.log("data: ", data);
+    return data;
   };
 
   const { data, isLoading, isError, error } = useQuery<ISuggestion, Error>({
