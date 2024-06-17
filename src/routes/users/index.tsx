@@ -19,7 +19,6 @@ function UserListPage() {
 
   const handlePageChange = (pageNumber: number) => {
     setCurrentPage(pageNumber);
-    // Fetch new data based on pageNumber here
   };
   return (
     <section>

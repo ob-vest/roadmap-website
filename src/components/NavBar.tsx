@@ -5,7 +5,12 @@ import {
   navigationMenuTriggerStyle,
 } from "@/components/ui/navigation-menu";
 import { Link } from "@tanstack/react-router";
+import { isUserLoggedIn } from "@/utils/authState";
+import { useUserLogOut } from "@/hooks/useUserLogOut";
+import { Button } from "./ui/button";
+
 const NavBar = () => {
+  const logOut = useUserLogOut();
   return (
     <>
       <div className="flex justify-end ">
@@ -25,9 +30,18 @@ const NavBar = () => {
               </Link>
             </NavigationMenuItem>
             <NavigationMenuItem>
-              <Link className={navigationMenuTriggerStyle()} to="/login">
-                Login
-              </Link>
+              {isUserLoggedIn() ? (
+                <Button
+                  className={`${navigationMenuTriggerStyle()} text-white`}
+                  onClick={logOut}
+                >
+                  Log out
+                </Button>
+              ) : (
+                <Link className={navigationMenuTriggerStyle()} to="/login">
+                  Login
+                </Link>
+              )}
             </NavigationMenuItem>
             {/* <NavigationMenuItem>
               <Link

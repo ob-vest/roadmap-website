@@ -7,7 +7,7 @@ export const Route = createFileRoute("/login")({
 
 function LoginPage() {
   return (
-    <div className="space-y-10 text-center mt-10">
+    <div className="mt-10 space-y-10 text-center">
       <h2>Login with Apple</h2>
       <Login />
     </div>
