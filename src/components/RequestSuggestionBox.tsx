@@ -3,6 +3,7 @@ import { Separator } from "@/components/ui/separator";
 import { Textarea } from "@/components/ui/textarea";
 import { Input } from "@/components/ui/input";
 import useSuggestionRequest, { ISuggestion } from "@/hooks/useAISuggestion";
+import { LoadingSpinner } from "./LoadingSpinner";
 
 function RequestSuggestionBox({
   requestId,
@@ -30,12 +31,21 @@ function RequestSuggestionBox({
     description: description,
   };
 
-  const { data: suggestion } = useSuggestionRequest(requestId, userContent);
+  const { data: suggestion, isLoading } = useSuggestionRequest(
+    requestId,
+    userContent,
+  );
 
   return (
     <div className="flex flex-col gap-5 rounded-md border border-border p-5 text-left">
       <h3 className="text-center">AI-generated suggestion</h3>
       <Separator />
+      {isLoading && (
+        <div className="flex flex-col items-center justify-center gap-3">
+          <LoadingSpinner size={50} className="text-primary" />
+          <p>Loading...</p>
+        </div>
+      )}
       {suggestion && (
         <>
           <div>
