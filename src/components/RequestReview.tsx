@@ -4,7 +4,7 @@ import { Button } from "@/components/ui/button";
 import { IRequest } from "@/hooks/useRequests";
 import useUpdateRequest from "@/hooks/useUpdateRequest";
 import { useState } from "react";
-import { useQueryClient } from "@tanstack/react-query";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import RequestSuggestionBox from "./RequestSuggestionBox";
 
 // export const Route = createFileRoute("/request-review")({
@@ -28,36 +28,53 @@ function ReviewPage(props: {
   const handleClose = () => {
     console.log("closing");
     props.setOpen(false);
-
     queryClient.invalidateQueries({
-      queryKey: ["pendingRequests", "requests"],
+      queryKey: ["pendingRequests"],
       refetchType: "all",
+      exact: true,
     });
-    queryClient.refetchQueries({
-      queryKey: ["pendingRequests", "requests"],
-    });
-    // For some reason, the refetchQueries function is not working as expected.
-    // It didnt refetch consistently, so I had to use the invalidateQueries function as well
   };
 
-  function approveRequest() {
-    const updatedRequest = { ...props.request };
-    if (isTitleChecked) {
-      console.log("title checked");
-      updatedRequest.title = title;
-    }
-    if (isDescriptionChecked) {
-      console.log("description checked");
-      updatedRequest.description = description;
-    }
-    updatedRequest.stateId = 2;
+  const approveRequest = useMutation({
+    mutationFn: async () => {
+      const updatedRequest = { ...props.request };
+      if (isTitleChecked) {
+        console.log("title checked");
+        updatedRequest.title = title;
+      }
+      if (isDescriptionChecked) {
+        console.log("description checked");
+        updatedRequest.description = description;
+      }
+      updatedRequest.stateId = 2;
 
-    updateRequest({
-      title: updatedRequest.title,
-      description: updatedRequest.description,
-      stateId: updatedRequest.stateId,
-    }).finally(() => handleClose());
-  }
+      updateRequest({
+        title: updatedRequest.title,
+        description: updatedRequest.description,
+        stateId: updatedRequest.stateId,
+      });
+
+      handleClose();
+    },
+  });
+  // }) {
+  //   const updatedRequest = { ...props.request };
+  //   if (isTitleChecked) {
+  //     console.log("title checked");
+  //     updatedRequest.title = title;
+  //   }
+  //   if (isDescriptionChecked) {
+  //     console.log("description checked");
+  //     updatedRequest.description = description;
+  //   }
+  //   updatedRequest.stateId = 2;
+
+  //   updateRequest({
+  //     title: updatedRequest.title,
+  //     description: updatedRequest.description,
+  //     stateId: updatedRequest.stateId,
+  //   }).finally(() => handleClose());
+  // }
 
   function rejectRequest() {
     const updatedRequest = { ...props.request };
@@ -77,7 +94,10 @@ function ReviewPage(props: {
         >
           Reject
         </Button>
-        <Button className="h-10 bg-foreground" onClick={() => approveRequest()}>
+        <Button
+          className="h-10 bg-foreground"
+          onClick={() => approveRequest.mutate()}
+        >
           Approve
         </Button>
       </div>
